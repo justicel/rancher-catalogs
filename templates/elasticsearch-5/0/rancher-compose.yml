@@ -1,6 +1,6 @@
 .catalog:
   name: "Elasticsearch"
-  version: "5.1.2-rancher0"
+  version: "5.2.2-rancher0"
   description: "Elasticsearch. You know, for search"
   questions:
     - variable: es_version
@@ -8,7 +8,7 @@
       label: "Elasticsearch Version"
       type: "string"
       required: true
-      default: "5.1.2"
+      default: "5.2.2"
     - variable: cluster_name
       description: "Unique name to assign to your Elasticsearch cluster."
       label: "Cluster Name"
@@ -61,6 +61,15 @@ version: '2'
 services:
   elasticsearch-masters:
     scale: ${master_count}
+    health_check:
+      port: 9200
+      request_line: GET /_cat/health HTTP/1.0
+      interval: 2000
+      initializing_timeout: 300000
+      unhealthy_threshold: 3
+      strategy: recreate
+      healthy_threshold: 2
+      response_timeout: 2000
     metadata:
       elasticsearch:
         yml:
@@ -73,6 +82,15 @@ services:
           discovery.zen.minimum_master_nodes: "${minimum_master_nodes}"
   elasticsearch-datanodes:
     scale: ${datanode_count}
+    health_check:
+      port: 9200
+      request_line: GET /_cat/health HTTP/1.0
+      interval: 2000
+      initializing_timeout: 300000
+      unhealthy_threshold: 3
+      strategy: recreate
+      healthy_threshold: 2
+      response_timeout: 2000
     metadata:
       elasticsearch:
         yml:
@@ -85,6 +103,15 @@ services:
           network.host: "_site_"
   elasticsearch-clients:
     scale: ${client_count}
+    health_check:
+      port: 9200
+      request_line: GET /_cat/health HTTP/1.0
+      interval: 2000
+      initializing_timeout: 300000
+      unhealthy_threshold: 3
+      strategy: recreate
+      healthy_threshold: 2
+      response_timeout: 2000
     metadata:
       elasticsearch:
         yml:

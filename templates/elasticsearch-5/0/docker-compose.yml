@@ -19,7 +19,7 @@ services:
       - /usr/share/elasticsearch/config
       - /opt/rancher/bin
     entrypoint: /bin/true
-    image: elasticsearch:${es_version}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${es_version}
   elasticsearch-base-master:
     ulimits:
       memlock:
@@ -28,12 +28,13 @@ services:
     cap_add:
       - IPC_LOCK
     environment:
+      xpack.security.enabled: "false"
       ES_JAVA_OPTS: "-Xms${java_memory}g -Xmx${java_memory}g"
     labels:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       elasticsearch.master.config.version: '0'
       io.rancher.container.hostname_override: container_name
-    image: elasticsearch:${es_version}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${es_version}
     network_mode: container:elasticsearch-masters
     volumes_from:
       - elasticsearch-datavolume-masters
@@ -62,7 +63,7 @@ services:
       - /usr/share/elasticsearch/config
       - /opt/rancher/bin
     entrypoint: /bin/true
-    image: elasticsearch:${es_version}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${es_version}
   elasticsearch-base-datanode:
     ulimits:
       memlock:
@@ -71,12 +72,13 @@ services:
     cap_add:
       - IPC_LOCK
     environment:
+      xpack.security.enabled: "false"
       ES_JAVA_OPTS: "-Xms${java_memory}g -Xmx${java_memory}g"
     labels:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       elasticsearch.datanode.config.version: '0'
       io.rancher.container.hostname_override: container_name
-    image: elasticsearch:${es_version}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${es_version}
     entrypoint:
       - /opt/rancher/bin/run.sh
     volumes_from:
@@ -104,7 +106,7 @@ services:
       - /usr/share/elasticsearch/config
       - /opt/rancher/bin
     entrypoint: /bin/true
-    image: elasticsearch:${es_version}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${es_version}
   elasticsearch-base-clients:
     ulimits:
       memlock:
@@ -113,12 +115,13 @@ services:
     cap_add:
       - IPC_LOCK
     environment:
+      xpack.security.enabled: "false"
       ES_JAVA_OPTS: "-Xms${java_memory}g -Xmx${java_memory}g"
     labels:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       elasticsearch.client.config.version: '0'
       io.rancher.container.hostname_override: container_name
-    image: elasticsearch:${es_version}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${es_version}
     volumes_from:
       - elasticsearch-datavolume-clients
     network_mode: container:elasticsearch-clients

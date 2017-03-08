@@ -1,8 +1,14 @@
 .catalog:
   name: "Kibana"
-  version: "5.1.2-rancher0"
+  version: "5.2.2-rancher0"
   description: "Kibana: Explore & Visualize Your Data"
   questions:
+    - variable: "kibana_version"
+      description: "Version of kibana to install"
+      label: "Kibana Version"
+      type: "string"
+      required: true
+      default: "5.2.2"
     - variable: "elasticsearch_source"
       description: "Link to elasticsearch service or stack/service"
       label: "Elasticsearch source"
@@ -16,9 +22,21 @@
       default: 80
       required: true
 
-nginx-proxy:
-  metadata:
-    nginx:
-      conf:
-        servername: "kibana"
-        upstream_port: 5601
+version: '2'
+services:
+  nginx-proxy:
+    metadata:
+      nginx:
+        conf:
+          servername: "kibana"
+          upstream_port: 5601
+  kibana5:
+      health_check:
+        port: 5601
+        request_line: GET /status HTTP/1.0
+        interval: 2000
+        initializing_timeout: 60000
+        unhealthy_threshold: 3
+        strategy: recreate
+        healthy_threshold: 2
+        response_timeout: 2000
