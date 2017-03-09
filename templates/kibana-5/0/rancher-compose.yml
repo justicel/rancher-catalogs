@@ -33,7 +33,7 @@ services:
   kibana5:
       health_check:
         port: 5601
-        request_line: GET /status HTTP/1.0
+        request_line: GET "/status" "HTTP/1.1"
         interval: 2000
         initializing_timeout: 60000
         unhealthy_threshold: 3
