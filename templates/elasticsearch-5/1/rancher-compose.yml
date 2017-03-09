@@ -1,6 +1,6 @@
 .catalog:
   name: "Elasticsearch"
-  version: "5.2.2-rancher0"
+  version: "5.2.2-rancher1"
   description: "Elasticsearch. You know, for search"
   questions:
     - variable: es_version
