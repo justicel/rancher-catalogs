@@ -75,7 +75,7 @@ services:
       port: 9200
       request_line: GET "/_cat/health" "HTTP/1.1"
       interval: 2000
-      initializing_timeout: 300000
+      initializing_timeout: 180000
       unhealthy_threshold: 3
       strategy: recreate
       healthy_threshold: 2
@@ -96,7 +96,7 @@ services:
     health_check:
       port: 9300
       interval: 2000
-      initializing_timeout: 300000
+      initializing_timeout: 180000
       unhealthy_threshold: 3
       strategy: recreate
       healthy_threshold: 2
@@ -117,7 +117,7 @@ services:
       port: 9200
       request_line: GET "/_cat/health" "HTTP/1.1"
       interval: 2000
-      initializing_timeout: 300000
+      initializing_timeout: 180000
       unhealthy_threshold: 3
       strategy: recreate
       healthy_threshold: 2
