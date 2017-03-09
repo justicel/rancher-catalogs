@@ -94,8 +94,7 @@ services:
           http.enabled: "false"
           network.host: "_site_"
     health_check:
-      port: 9200
-      request_line: GET "/_cat/health" "HTTP/1.1"
+      port: 9300
       interval: 2000
       initializing_timeout: 300000
       unhealthy_threshold: 3
