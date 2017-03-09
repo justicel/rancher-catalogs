@@ -80,6 +80,17 @@ services:
           node.ingest: "false"
           network.host: "_site_"
           discovery.zen.minimum_master_nodes: "${minimum_master_nodes}"
+  elasticsearch-base-master:
+    health_check:
+      port: 9200
+      request_line: GET /_cat/health HTTP/1.0
+      interval: 2000
+      initializing_timeout: 300000
+      unhealthy_threshold: 3
+      strategy: recreate
+      healthy_threshold: 2
+      response_timeout: 2000
+
   elasticsearch-datanodes:
     scale: ${datanode_count}
     health_check:
@@ -101,6 +112,17 @@ services:
           node.ingest: "false"
           http.enabled: "false"
           network.host: "_site_"
+  elasticsearch-base-datanodes:
+    health_check:
+      port: 9200
+      request_line: GET /_cat/health HTTP/1.0
+      interval: 2000
+      initializing_timeout: 300000
+      unhealthy_threshold: 3
+      strategy: recreate
+      healthy_threshold: 2
+      response_timeout: 2000
+
   elasticsearch-clients:
     scale: ${client_count}
     health_check:
@@ -121,3 +143,13 @@ services:
          node.master: "false"
          node.ingest: "true"
          network.host: "_site_"
+  elasticsearch-base-clients:
+    health_check:
+      port: 9200
+      request_line: GET /_cat/health HTTP/1.0
+      interval: 2000
+      initializing_timeout: 300000
+      unhealthy_threshold: 3
+      strategy: recreate
+      healthy_threshold: 2
+      response_timeout: 2000
