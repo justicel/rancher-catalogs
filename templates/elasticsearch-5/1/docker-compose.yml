@@ -152,11 +152,11 @@ volumes:
     driver: rancher-ebs
     per_container: true
     driver_opts:
-      size: ${storage_size}
+      size: 30
       volumeType: gp2
   es_clients_data:
     driver: rancher-ebs
     per_container: true
     driver_opts:
-      size: ${storage_size}
+      size: 30
       volumeType: gp2
