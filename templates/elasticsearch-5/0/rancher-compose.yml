@@ -61,15 +61,6 @@ version: '2'
 services:
   elasticsearch-masters:
     scale: ${master_count}
-    health_check:
-      port: 9200
-      request_line: GET /_cat/health HTTP/1.0
-      interval: 2000
-      initializing_timeout: 300000
-      unhealthy_threshold: 3
-      strategy: recreate
-      healthy_threshold: 2
-      response_timeout: 2000
     metadata:
       elasticsearch:
         yml:
@@ -93,15 +84,6 @@ services:
 
   elasticsearch-datanodes:
     scale: ${datanode_count}
-    health_check:
-      port: 9200
-      request_line: GET /_cat/health HTTP/1.0
-      interval: 2000
-      initializing_timeout: 300000
-      unhealthy_threshold: 3
-      strategy: recreate
-      healthy_threshold: 2
-      response_timeout: 2000
     metadata:
       elasticsearch:
         yml:
@@ -112,7 +94,7 @@ services:
           node.ingest: "false"
           http.enabled: "false"
           network.host: "_site_"
-  elasticsearch-base-datanodes:
+  elasticsearch-base-datanode:
     health_check:
       port: 9200
       request_line: GET /_cat/health HTTP/1.0
@@ -125,15 +107,6 @@ services:
 
   elasticsearch-clients:
     scale: ${client_count}
-    health_check:
-      port: 9200
-      request_line: GET /_cat/health HTTP/1.0
-      interval: 2000
-      initializing_timeout: 300000
-      unhealthy_threshold: 3
-      strategy: recreate
-      healthy_threshold: 2
-      response_timeout: 2000
     metadata:
       elasticsearch:
         yml:
